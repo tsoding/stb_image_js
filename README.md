@@ -17,6 +17,19 @@ stbi_load_from_url("image.png").then((image) => ctx.putImageData(image, 0, 0));
 
 *I'll eventually turn this into a proper npm package. Just copy the files for now. It's simple and straightforward. You have everything you need in here.*
 
+## Demo
+
+The demo consists of two files: [index.html](./index.html) and [index.js](./index.js) compiled from [index.ts](./index.ts) (that's probably the one you wanna read). It loads up images from [./img/](./img/) folder using stb_image.js and puts them into the canvas.
+
+If you want to run it locally just run something like
+
+```console
+$ python3 -m http.server 6969 # or any other lightweight HTTP server of your choice
+$ browser http://localhost:6969/
+```
+
+You can also find it deployed at https://tsoding.github.io/stb_image_js/
+
 ## Rebuilding `stb_image.wasm`
 
 You will need clang 13.0.0+:
