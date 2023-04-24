@@ -37,7 +37,7 @@ You can also find it deployed at https://tsoding.github.io/stb_image_js/
 You will need clang 13.0.0+:
 
 ```console
-$ node build.js
+$ node build-wasm.js
 ```
 
 ## Rebuilding the JS files
