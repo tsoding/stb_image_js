@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const stb_image_raw = WebAssembly.instantiateStreaming(fetch("stb_image.wasm"), {
+const STB_IMAGE_WASM_PATH = "stb_image.wasm";
+const stb_image_raw = WebAssembly.instantiateStreaming(fetch(STB_IMAGE_WASM_PATH), {
     env: {},
 }).then((w) => {
-    console.log(w);
     const memory = w.instance.exports.memory;
     // TODO: grow the memory automatically as needed
     memory.grow(10);
@@ -48,26 +48,4 @@ function stbi_load_from_url(url) {
         return stbi_load_from_arraybuffer(response.arrayBuffer());
     });
 }
-function start() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const tsodinPog = yield stbi_load_from_url("tsodinPog.png");
-        const tsodinThink = yield stbi_load_from_url("tsodinThink.png");
-        const appId = "app";
-        const app = document.getElementById(appId);
-        if (app === null) {
-            throw new Error(`Could not find canvas with id ${appId}`);
-        }
-        console.log("app", app);
-        app.width = tsodinPog.width + tsodinThink.width;
-        app.height = Math.max(tsodinPog.height, tsodinThink.height);
-        const ctx = app.getContext("2d");
-        if (ctx === null) {
-            throw new Error("Could not create 2d context");
-        }
-        console.log("ctx", ctx);
-        ctx.putImageData(tsodinPog, 0, 0);
-        ctx.putImageData(tsodinThink, tsodinPog.width, 0);
-    });
-}
-start();
 //# sourceMappingURL=stb_image.js.map

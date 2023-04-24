@@ -1,3 +1,5 @@
+const STB_IMAGE_WASM_PATH = "stb_image.wasm";
+
 type pointer = number;
 
 type stbi_load_from_memory_type = (buf: pointer, len: number, x: number, y: number, channels_in_file: pointer, desired_channels: number) => pointer;
@@ -11,10 +13,9 @@ interface Stb_Image_Raw {
     memory: WebAssembly.Memory;
 }
 
-const stb_image_raw: Promise<Stb_Image_Raw> = WebAssembly.instantiateStreaming(fetch("stb_image.wasm"), {
+const stb_image_raw: Promise<Stb_Image_Raw> = WebAssembly.instantiateStreaming(fetch(STB_IMAGE_WASM_PATH), {
     env: {},
 }).then((w) => {
-    console.log(w);
     const memory = w.instance.exports.memory as WebAssembly.Memory;
     // TODO: grow the memory automatically as needed
     memory.grow(10);
@@ -49,26 +50,3 @@ async function stbi_load_from_url(url: RequestInfo): Promise<ImageData> {
     const response = await fetch(url);
     return stbi_load_from_arraybuffer(response.arrayBuffer());
 }
-
-async function start() {
-    const tsodinPog = await stbi_load_from_url("tsodinPog.png");
-    const tsodinThink = await stbi_load_from_url("tsodinThink.png");
-
-    const appId = "app";
-    const app = document.getElementById(appId) as HTMLCanvasElement;
-    if (app === null) {
-        throw new Error(`Could not find canvas with id ${appId}`);
-    }
-    console.log("app", app);
-    app.width = tsodinPog.width + tsodinThink.width;
-    app.height = Math.max(tsodinPog.height, tsodinThink.height);
-    const ctx = app.getContext("2d");
-    if (ctx === null) {
-        throw new Error("Could not create 2d context");
-    }
-    console.log("ctx", ctx);
-    ctx.putImageData(tsodinPog, 0, 0);
-    ctx.putImageData(tsodinThink, tsodinPog.width, 0);
-}
-
-start();
