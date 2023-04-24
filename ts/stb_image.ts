@@ -38,10 +38,10 @@ async function stbi_load_from_arraybuffer(arrayBuffer: ArrayBuffer | Promise<Arr
     const x = stb_image.malloc(4);
     const y = stb_image.malloc(4);
     const pixels = stb_image.stbi_load_from_memory(buf, len, x, y, 0, 4);
-    const w = new Uint32Array(new Uint8Array(stb_image.memory.buffer, x, 4))[0];
-    const h = new Uint32Array(new Uint8Array(stb_image.memory.buffer, y, 4))[0];
+    const w = new Uint32Array(stb_image.memory.buffer, x, 1)[0];
+    const h = new Uint32Array(stb_image.memory.buffer, y, 1)[0];
     const imageData = new Uint8ClampedArray(w*h*4);
-    // Copying the image data cause the next call to stb_image.heap_reset() will erase it.
+    // Copying the image data cause the next call to stb_image.heap_reset() above will erase it.
     imageData.set(new Uint8ClampedArray(stb_image.memory.buffer, pixels, w*h*4));
     return new ImageData(imageData, w);
 }

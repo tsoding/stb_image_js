@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
-        const tsodinPog = yield stbi_load_from_url("img/tsodinPog.png");
-        const tsodinThink = yield stbi_load_from_url("img/tsodinThink.png");
+        const tsodinPog = yield stbi_load_from_url("img/tsodinPog-112.png");
+        const tsodinThink = yield stbi_load_from_url("img/tsodinThink-113.png");
         const appId = "app";
         const app = document.getElementById(appId);
         if (app === null) {
