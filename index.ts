@@ -1,6 +1,6 @@
 async function start() {
-    const tsodinPog = await stbi_load_from_url("tsodinPog.png");
-    const tsodinThink = await stbi_load_from_url("tsodinThink.png");
+    const tsodinPog = await stbi_load_from_url("img/tsodinPog.png");
+    const tsodinThink = await stbi_load_from_url("img/tsodinThink.png");
 
     const appId = "app";
     const app = document.getElementById(appId) as HTMLCanvasElement;
