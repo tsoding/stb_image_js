@@ -28,4 +28,4 @@ function start() {
     });
 }
 start();
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=demo.js.map

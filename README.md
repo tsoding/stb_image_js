@@ -21,7 +21,7 @@ stbi_load_from_url("image.png").then((image) => ctx.putImageData(image, 0, 0));
 
 ## Demo
 
-The demo consists of two files: [index.html](./index.html) and [js/index.js](./js/index.js) compiled from [ts/index.ts](./ts/index.ts) (that's probably the one you wanna read). It loads up images from [./img/](./img/) folder using [js/stb_image.js](./js/stb_image.js) and puts them into the canvas.
+The demo consists of two files: [index.html](./index.html) and [js/demo.js](./js/demo.js) compiled from [ts/index.ts](./ts/index.ts) (that's probably the one you wanna read). It loads up images from [./img/](./img/) folder using [js/stb_image.js](./js/stb_image.js) and puts them into the canvas.
 
 If you want to run it locally just run something like
 
