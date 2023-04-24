@@ -6,8 +6,8 @@ What we did is basically compiled [stb_image.h](https://github.com/nothings/stb)
 
 ## Quick Start
 
-1. Copy [stb_image.js](./stb_image.js) and [stb_image.wasm](./stb_image.wasm) to the root of your website.
-1. Modify `STB_IMAGE_WASM_PATH` in [stb_image.js](./stb_image.js) if you want different path to [stb_image.wasm](./stb_image.wasm).
+1. Copy [js/stb_image.js](./js/stb_image.js) and [stb_image.wasm](./stb_image.wasm) to the root of your website.
+1. Modify `STB_IMAGE_WASM_PATH` in [js/stb_image.js](./js/stb_image.js) if you want different path to [stb_image.wasm](./stb_image.wasm).
 1. `<script src='./stb_image.js'></script>`
 1.
 
@@ -17,7 +17,7 @@ const ctx = canvas.getContext("2d");
 stbi_load_from_url("image.png").then((image) => ctx.putImageData(image, 0, 0));
 ```
 
-*I'll eventually turn this into a proper npm package. Just copy the files for now. It's simple and straightforward. You have everything you need in here.*
+*I'll eventually turn this into a proper npm package. Just copy the files for now. It's simple and straightforward. You have everything you need in here. See Demo for more info.*
 
 ## Demo
 
