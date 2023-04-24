@@ -2,6 +2,8 @@
 
 [stb_image.h](https://github.com/nothings/stb) wrapper for a Web Browser. Or any JavaScript environment that supports [WebAssembly](https://webassembly.org/) and [fetch()](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 
+What we did is basically compiled [stb_image.h](https://github.com/nothings/stb) to a self-contained WASM module and wrote a simple js wrapper that takes the bytes of image files, feeds them into the WASM module, receives the parsed pixels and constructs [ImageData](https://developer.mozilla.org/en-US/docs/Web/API/ImageData) out of them. So you can download an image and get its ImageData in one go if you ever wanted to do it this way.
+
 ## Quick Start
 
 1. Copy [stb_image.js](./stb_image.js) and [stb_image.wasm](./stb_image.wasm) to the root of your website.
