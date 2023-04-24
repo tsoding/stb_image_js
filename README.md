@@ -6,9 +6,9 @@ What we did is basically compiled [stb_image.h](https://github.com/nothings/stb)
 
 ## Quick Start
 
-1. Copy [js/stb_image.js](./js/stb_image.js) and [stb_image.wasm](./stb_image.wasm) to the root of your website.
-1. Modify `STB_IMAGE_WASM_PATH` in [js/stb_image.js](./js/stb_image.js) if you want different path to [stb_image.wasm](./stb_image.wasm).
-1. `<script src='./stb_image.js'></script>`
+1. Copy [js/stb_image.js](./js/stb_image.js) and [wasm/stb_image.wasm](./wasm/stb_image.wasm) file to your website to `js` and `wasm` folder correpondingly.
+1. Modify `STB_IMAGE_WASM_PATH` in [js/stb_image.js](./js/stb_image.js) if you want a different path to [wasm/stb_image.wasm](./wasm/stb_image.wasm).
+1. `<script src='./js/stb_image.js'></script>`
 1.
 
 ```javascript
@@ -17,11 +17,11 @@ const ctx = canvas.getContext("2d");
 stbi_load_from_url("image.png").then((image) => ctx.putImageData(image, 0, 0));
 ```
 
-*I'll eventually turn this into a proper npm package. Just copy the files for now. It's simple and straightforward. You have everything you need in here. See Demo for more info.*
+*I'll eventually turn this into a proper npm package. Just copy the files for now. It's simple and straightforward. You have everything you need in here. See Demo for more info. The whole codebase is dead simple. You can learn it in less than an hour. I believe in you.*
 
 ## Demo
 
-The demo consists of two files: [index.html](./index.html) and [index.js](./index.js) compiled from [index.ts](./index.ts) (that's probably the one you wanna read). It loads up images from [./img/](./img/) folder using stb_image.js and puts them into the canvas.
+The demo consists of two files: [index.html](./index.html) and [js/index.js](./js/index.js) compiled from [ts/index.ts](./ts/index.ts) (that's probably the one you wanna read). It loads up images from [./img/](./img/) folder using [js/stb_image.js](./js/stb_image.js) and puts them into the canvas.
 
 If you want to run it locally just run something like
 

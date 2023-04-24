@@ -1,4 +1,4 @@
-const STB_IMAGE_WASM_PATH = "stb_image.wasm";
+const STB_IMAGE_WASM_PATH = "wasm/stb_image.wasm";
 
 type pointer = number;
 

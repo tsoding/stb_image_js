@@ -10,7 +10,7 @@ const clang = spawn('clang', [
     '-Wl,--export=malloc',
     '-Wl,--export=heap_reset',
     '-Wl,--allow-undefined',
-    '-o', 'stb_image.wasm',
+    '-o', 'wasm/stb_image.wasm',
     'c/stb_image.c'
 ]);
 

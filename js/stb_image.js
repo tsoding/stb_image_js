@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const STB_IMAGE_WASM_PATH = "stb_image.wasm";
+const STB_IMAGE_WASM_PATH = "wasm/stb_image.wasm";
 const stb_image_raw = WebAssembly.instantiateStreaming(fetch(STB_IMAGE_WASM_PATH), {
     env: {},
 }).then((w) => {
