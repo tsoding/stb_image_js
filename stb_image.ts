@@ -1,0 +1,74 @@
+type pointer = number;
+
+type stbi_load_from_memory_type = (buf: pointer, len: number, x: number, y: number, channels_in_file: pointer, desired_channels: number) => pointer;
+type malloc_type = (s: number) => pointer;
+type heap_reset_type = () => void;
+
+interface Stb_Image_Raw {
+    stbi_load_from_memory: stbi_load_from_memory_type;
+    malloc: malloc_type;
+    heap_reset: heap_reset_type;
+    memory: WebAssembly.Memory;
+}
+
+const stb_image_raw: Promise<Stb_Image_Raw> = WebAssembly.instantiateStreaming(fetch("stb_image.wasm"), {
+    env: {},
+}).then((w) => {
+    console.log(w);
+    const memory = w.instance.exports.memory as WebAssembly.Memory;
+    // TODO: grow the memory automatically as needed
+    memory.grow(10);
+    return {
+        "memory": memory,
+        "stbi_load_from_memory": w.instance.exports.stbi_load_from_memory as stbi_load_from_memory_type,
+        "malloc": w.instance.exports.malloc as malloc_type,
+        "heap_reset": w.instance.exports.heap_reset as heap_reset_type,
+    };
+});
+
+async function stbi_load_from_arraybuffer(arrayBuffer: ArrayBuffer | Promise<ArrayBuffer>): Promise<ImageData> {
+    const buffer = new Uint8Array(await arrayBuffer);
+    const stb_image = await stb_image_raw;
+    // TODO: maybe we should expose all of this memory management to the user so we don't have to do the copy below
+    stb_image.heap_reset();
+    const len = buffer.length;
+    const buf = stb_image.malloc(len);
+    new Uint8Array(stb_image.memory.buffer, buf, len).set(buffer);
+    const x = stb_image.malloc(4);
+    const y = stb_image.malloc(4);
+    const pixels = stb_image.stbi_load_from_memory(buf, len, x, y, 0, 4);
+    const w = new Uint32Array(new Uint8Array(stb_image.memory.buffer, x, 4))[0];
+    const h = new Uint32Array(new Uint8Array(stb_image.memory.buffer, y, 4))[0];
+    const imageData = new Uint8ClampedArray(w*h*4);
+    // Copying the image data cause the next call to stb_image.heap_reset() will erase it.
+    imageData.set(new Uint8ClampedArray(stb_image.memory.buffer, pixels, w*h*4));
+    return new ImageData(imageData, w);
+}
+
+async function stbi_load_from_url(url: RequestInfo): Promise<ImageData> {
+    const response = await fetch(url);
+    return stbi_load_from_arraybuffer(response.arrayBuffer());
+}
+
+async function start() {
+    const tsodinPog = await stbi_load_from_url("tsodinPog.png");
+    const tsodinThink = await stbi_load_from_url("tsodinThink.png");
+
+    const appId = "app";
+    const app = document.getElementById(appId) as HTMLCanvasElement;
+    if (app === null) {
+        throw new Error(`Could not find canvas with id ${appId}`);
+    }
+    console.log("app", app);
+    app.width = tsodinPog.width + tsodinThink.width;
+    app.height = Math.max(tsodinPog.height, tsodinThink.height);
+    const ctx = app.getContext("2d");
+    if (ctx === null) {
+        throw new Error("Could not create 2d context");
+    }
+    console.log("ctx", ctx);
+    ctx.putImageData(tsodinPog, 0, 0);
+    ctx.putImageData(tsodinThink, tsodinPog.width, 0);
+}
+
+start();
