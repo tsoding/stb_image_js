@@ -1,6 +1,6 @@
 const spawn = require('child_process').spawn;
 const clang = spawn('clang', [
-    '-I.',
+    '-I./c/',
     '-Os',
     '-fno-builtin',
     '--target=wasm32',
@@ -11,7 +11,7 @@ const clang = spawn('clang', [
     '-Wl,--export=heap_reset',
     '-Wl,--allow-undefined',
     '-o', 'stb_image.wasm',
-    'stb_image.c'
+    'c/stb_image.c'
 ]);
 
 clang.stdout.on('data', (chunk) => {
